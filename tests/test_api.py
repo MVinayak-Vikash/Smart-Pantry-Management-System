@@ -42,19 +42,20 @@ def override_get_db():
         db.close()
 
 
-app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
 @pytest.fixture(autouse=True)
 def setup_and_teardown_db():
     """Create fresh tables and seed base items before each test."""
+    app.dependency_overrides[get_db] = override_get_db
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
     crud.seed_initial_items(db)
     db.close()
     yield
     Base.metadata.drop_all(bind=engine)
+    app.dependency_overrides.clear()
 
 
 def test_initial_items_seeded():

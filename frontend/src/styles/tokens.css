@@ -1,0 +1,162 @@
+/* Design Tokens for Smart Pantry Management System */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root,
+[data-theme='dark'] {
+  /* Surfaces */
+  --bg-primary: #080C14;
+  --bg-app: #080C14;
+  --bg-sidebar: #0D121F;
+  --bg-header: rgba(8, 12, 20, 0.85);
+  --bg-card: #121826;
+  --bg-card-hover: #161E30;
+  --bg-card-subtle: rgba(0, 0, 0, 0.28);
+  --bg-elevated: #1A2236;
+  --bg-input: #0B0F1A;
+  --glass-bg: rgba(18, 24, 38, 0.85);
+
+  /* Borders */
+  --border-color: #1E283D;
+  --border-subtle: #1E283D;
+  --border-muted: #172033;
+  --border-hover: #334155;
+  --border-accent: rgba(56, 189, 248, 0.4);
+
+  /* Typography */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #080C14;
+
+  /* Brand Accents */
+  --brand-primary: #4F46E5;
+  --brand-primary-light: #818CF8;
+  --brand-primary-hover: #4338CA;
+  --color-primary: #38BDF8;
+  --color-primary-glow: rgba(56, 189, 248, 0.2);
+
+  /* Status Colors */
+  --color-available: #10B981;
+  --color-available-bg: rgba(16, 185, 129, 0.12);
+  --color-available-border: rgba(16, 185, 129, 0.3);
+
+  --color-low: #F59E0B;
+  --color-low-bg: rgba(245, 158, 11, 0.12);
+  --color-low-border: rgba(245, 158, 11, 0.3);
+
+  --color-critical: #EF4444;
+  --color-critical-bg: rgba(239, 68, 68, 0.12);
+  --color-critical-border: rgba(239, 68, 68, 0.35);
+
+  --color-info: #38BDF8;
+  --color-info-bg: rgba(56, 189, 248, 0.12);
+  --color-info-border: rgba(56, 189, 248, 0.3);
+
+  /* Layout */
+  --sidebar-width: 250px;
+  --header-height: 72px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 14px -2px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme='light'] {
+  /* Surfaces */
+  --bg-primary: #F8FAFC;
+  --bg-app: #F8FAFC;
+  --bg-sidebar: #FFFFFF;
+  --bg-header: rgba(255, 255, 255, 0.88);
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F1F5F9;
+  --bg-card-subtle: #F1F5F9;
+  --bg-elevated: #FFFFFF;
+  --bg-input: #F8FAFC;
+  --glass-bg: rgba(255, 255, 255, 0.92);
+
+  /* Borders */
+  --border-color: #E2E8F0;
+  --border-subtle: #E2E8F0;
+  --border-muted: #CBD5E1;
+  --border-hover: #94A3B8;
+  --border-accent: rgba(56, 189, 248, 0.6);
+
+  /* Typography */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-inverse: #F8FAFC;
+
+  /* Brand Accents */
+  --brand-primary: #4F46E5;
+  --brand-primary-light: #4338CA;
+  --brand-primary-hover: #3730A3;
+  --color-primary: #0284C7;
+  --color-primary-glow: rgba(2, 132, 199, 0.15);
+
+  /* Status Colors */
+  --color-available: #059669;
+  --color-available-bg: rgba(16, 185, 129, 0.12);
+  --color-available-border: rgba(16, 185, 129, 0.35);
+
+  --color-low: #D97706;
+  --color-low-bg: rgba(245, 158, 11, 0.12);
+  --color-low-border: rgba(245, 158, 11, 0.35);
+
+  --color-critical: #DC2626;
+  --color-critical-bg: rgba(239, 68, 68, 0.12);
+  --color-critical-border: rgba(239, 68, 68, 0.35);
+
+  --color-info: #0284C7;
+  --color-info-bg: rgba(56, 189, 248, 0.12);
+  --color-info-border: rgba(56, 189, 248, 0.35);
+
+  /* Layout */
+  --sidebar-width: 250px;
+  --header-height: 72px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px -4px rgba(15, 23, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

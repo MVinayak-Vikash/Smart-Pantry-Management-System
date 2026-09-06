@@ -1,0 +1,120 @@
+{
+  "notice": "This evaluation is performed on synthetically generated multi-household pantry data using a strict chronological 70/15/15 train/val/test split to prevent time-series leakage. It must not be represented as real human household measurements.",
+  "dataset_size_records": 728000,
+  "households_count": 500,
+  "train_size": 508000,
+  "val_size": 110000,
+  "test_size": 110000,
+  "regression_benchmarks": [
+    {
+      "model_name": "Baseline-7d-SMA",
+      "mae": 15.21,
+      "rmse": 37.23,
+      "r2": 0.922,
+      "is_baseline": true
+    },
+    {
+      "model_name": "Baseline-EMA (alpha=0.2)",
+      "mae": 15.19,
+      "rmse": 37.32,
+      "r2": 0.922,
+      "is_baseline": true
+    },
+    {
+      "model_name": "RandomForestRegressor",
+      "mae": 12.04,
+      "rmse": 31.89,
+      "r2": 0.943,
+      "is_baseline": false,
+      "residual_std": 31.89
+    },
+    {
+      "model_name": "HistGradientBoostingRegressor",
+      "mae": 12.17,
+      "rmse": 31.81,
+      "r2": 0.943,
+      "is_baseline": false
+    }
+  ],
+  "classification_metrics": {
+    "accuracy": 1.0,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "macro_f1": 1.0,
+    "classes": [
+      "NORMAL",
+      "HIGH_SUGAR",
+      "HIGH_SODIUM",
+      "HIGH_FAT",
+      "INCREASING_CONSUMPTION",
+      "IRREGULAR"
+    ],
+    "confusion_matrix": [
+      [
+        263,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        113,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        87,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        58,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        44,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        35
+      ]
+    ]
+  },
+  "feature_importance": {
+    "item_code": 0.0049,
+    "family_size": 0.072,
+    "adults_count": 0.0002,
+    "children_count": 0.0003,
+    "elderly_count": 0.0002,
+    "day_of_week": 0.0095,
+    "is_weekend": 0.0069,
+    "prev_1d_consumption": 0.2474,
+    "rolling_3d_avg": 0.5995,
+    "rolling_7d_avg": 0.0168,
+    "rolling_14d_avg": 0.0276,
+    "rolling_30d_avg": 0.0099,
+    "trend_7d_vs_30d": 0.0024,
+    "current_quantity": 0.0025
+  },
+  "trained_at": "2026-09-06T16:02:10.513464+00:00"
+}

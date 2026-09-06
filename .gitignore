@@ -36,3 +36,15 @@ Thumbs.db
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node & Frontend SPA
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+
+# Large synthetic raw datasets (generated on demand via python -m data.synthetic.generator)
+data/synthetic/consumption_dataset.csv
+data/synthetic/nutrition_dataset.csv
+
+

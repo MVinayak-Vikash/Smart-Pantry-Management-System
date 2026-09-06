@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Base project directory
@@ -27,6 +27,45 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+# Columns to auto-migrate if existing SQLite database lacks newly added fields
+NEW_ITEM_COLUMNS = [
+    ("household_id", "INTEGER DEFAULT 1"),
+    ("category", "VARCHAR DEFAULT 'General'"),
+    ("serving_size_g", "FLOAT DEFAULT 50.0"),
+    ("calories_per_100g", "FLOAT DEFAULT 0.0"),
+    ("carbohydrates_per_100g", "FLOAT DEFAULT 0.0"),
+    ("protein_per_100g", "FLOAT DEFAULT 0.0"),
+    ("fat_per_100g", "FLOAT DEFAULT 0.0"),
+    ("sugar_per_100g", "FLOAT DEFAULT 0.0"),
+    ("sodium_mg_per_100g", "FLOAT DEFAULT 0.0"),
+    ("fiber_per_100g", "FLOAT DEFAULT 0.0"),
+    ("expiry_date", "DATETIME"),
+    ("storage_location", "VARCHAR DEFAULT 'Pantry Shelf'"),
+    ("is_perishable", "BOOLEAN DEFAULT 0"),
+    ("active", "BOOLEAN DEFAULT 1"),
+]
+
+
+def auto_migrate_sqlite(target_engine=None):
+    """
+    Check existing SQLite tables and dynamically add newly added columns
+    to preserve existing data and avoid schema mismatches without full migrations.
+    """
+    eng = target_engine or engine
+    try:
+        with eng.connect() as conn:
+            inspector = inspect(eng)
+            tables = inspector.get_table_names()
+            if "items" in tables:
+                existing_cols = {c["name"] for c in inspector.get_columns("items")}
+                for col_name, col_type in NEW_ITEM_COLUMNS:
+                    if col_name not in existing_cols:
+                        conn.execute(text(f"ALTER TABLE items ADD COLUMN {col_name} {col_type}"))
+                conn.commit()
+    except Exception as e:
+        # Non-critical if in-memory or fresh DB
+        pass
+
 
 def get_db():
     """
@@ -40,15 +79,21 @@ def get_db():
         db.close()
 
 
-def init_db():
+def init_db(target_engine=None):
     """
-    Initialize database tables and seed the 4 initial pantry items if they do not exist.
+    Initialize database tables, run auto-migration for existing SQLite files,
+    and seed default household, initial pantry items, and recipes.
     """
     from backend import models, crud
-    Base.metadata.create_all(bind=engine)
+    eng = target_engine or engine
+    Base.metadata.create_all(bind=eng)
+    auto_migrate_sqlite(eng)
 
-    db = SessionLocal()
+    Session = sessionmaker(autocommit=False, autoflush=False, bind=eng)
+    db = Session()
     try:
+        crud.seed_default_household(db)
         crud.seed_initial_items(db)
+        crud.seed_initial_recipes(db)
     finally:
         db.close()
